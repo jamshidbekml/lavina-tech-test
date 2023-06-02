@@ -123,7 +123,7 @@ interface DrawerProps {
 export const DrawerRight: React.FC<DrawerProps> = ({ children }) => {
     const theme = useTheme();
     const { logout } = useActions();
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = React.useState(false);
 
     const handleDrawerOpen = () => {
         setOpen(true);

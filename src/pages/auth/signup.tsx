@@ -27,7 +27,7 @@ function Copyright(props: any) {
                 href={'https://lavina.tech/main'}
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ textDecoration: 'none' }}
+                style={{ textDecoration: 'none', color: 'rgb(25, 118, 210)' }}
             >
                 Lavina Tech
             </a>{' '}
@@ -142,7 +142,13 @@ export default function SignUp() {
                         </Button>
                         <Grid container justifyContent="flex-end">
                             <Grid item>
-                                <Link to={'signin'}>
+                                <Link
+                                    to={'signin'}
+                                    style={{
+                                        textDecoration: 'none',
+                                        color: 'rgb(25, 118, 210)',
+                                    }}
+                                >
                                     Already have an account? Sign in
                                 </Link>
                             </Grid>
