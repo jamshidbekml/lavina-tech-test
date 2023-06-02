@@ -18,7 +18,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({
     exact = false,
 }) => {
     const { user } = useTypedSelector((state) => state.auth);
-    if (!user?.key) return <Redirect to={`/login?redirectTo=${path}`} />;
+    if (!user?.key) return <Redirect to={`/signin?redirectTo=${path}`} />;
     return <Route component={component} path={path} exact={exact} />;
 };
 
