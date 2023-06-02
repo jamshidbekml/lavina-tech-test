@@ -36,7 +36,7 @@ const EditModal: React.FC<ExpenditureDynamicsProps> = ({ book }) => {
         setOpen(false);
     };
 
-    const handleSubmit = (event: any) => {
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         editBook({

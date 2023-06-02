@@ -13,7 +13,6 @@ import { Link, Redirect } from 'react-router-dom';
 import useActions from '../../hooks/useActions';
 import useTypedSelector from '../../hooks/useTypedSelector';
 import { parse } from 'query-string';
-import { notify } from '../../utils';
 
 function Copyright(props: any) {
     return (
@@ -43,7 +42,7 @@ const theme = createTheme();
 export default function SignIn() {
     const { signin } = useActions();
     const { redirectTo } = parse(window.location.search);
-    const { user, error } = useTypedSelector((state) => state.auth);
+    const { user } = useTypedSelector((state) => state.auth);
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -53,10 +52,6 @@ export default function SignIn() {
             secret: data.get('secret')?.toString() ?? '',
         });
     };
-
-    React.useEffect(() => {
-        if (error) notify(error, 'error');
-    }, [error]);
 
     if (user?.key) {
         return (

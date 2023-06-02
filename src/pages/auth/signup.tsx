@@ -9,7 +9,10 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import useTypedSelector from '../../hooks/useTypedSelector';
+import { parse } from 'query-string';
+import useActions from '../../hooks/useActions';
 
 function Copyright(props: any) {
     return (
@@ -38,14 +41,33 @@ function Copyright(props: any) {
 const defaultTheme = createTheme();
 
 export default function SignUp() {
+    const { redirectTo } = parse(window.location.search);
+    const { signup } = useActions();
+    const { user } = useTypedSelector((state) => state.auth);
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
+        signup({
+            name: data.get('name')?.toString() ?? '',
+            email: data.get('email')?.toString() ?? '',
+            key: data.get('key')?.toString() ?? '',
+            secret: data.get('secret')?.toString() ?? '',
         });
     };
+
+    if (user?.key) {
+        return (
+            <Redirect
+                to={
+                    redirectTo === '/' || !redirectTo
+                        ? '/'
+                        : Array.isArray(redirectTo)
+                        ? redirectTo[0]
+                        : redirectTo
+                }
+            />
+        );
+    }
 
     return (
         <ThemeProvider theme={defaultTheme}>
@@ -67,7 +89,6 @@ export default function SignUp() {
                     </Typography>
                     <Box
                         component="form"
-                        noValidate
                         onSubmit={handleSubmit}
                         sx={{ mt: 3 }}
                     >
@@ -78,7 +99,6 @@ export default function SignUp() {
                                     name="name"
                                     required
                                     fullWidth
-                                    id="firstName"
                                     label="Name"
                                     autoFocus
                                 />
@@ -87,7 +107,6 @@ export default function SignUp() {
                                 <TextField
                                     required
                                     fullWidth
-                                    id="lastName"
                                     label="Key"
                                     name="key"
                                 />
@@ -109,7 +128,6 @@ export default function SignUp() {
                                     name="secret"
                                     label="Secret"
                                     type="password"
-                                    id="password"
                                     autoComplete="new-password"
                                 />
                             </Grid>

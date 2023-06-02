@@ -20,7 +20,7 @@ export default function CreateModal() {
         setOpen(false);
     };
 
-    const handleSubmit = (event: any) => {
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         createBook({ isbn: data.get('isbn')?.toString() ?? '' });
